@@ -200,5 +200,19 @@ namespace NFCManager
             //InitNfcEr302();
             CallBack();
         }
+
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+            textBoxData.Text = string.Empty;
+            NfcOperate nfcOperate=new NfcOperate();
+            string nfcId = nfcOperate.ReadNfcId(bConnectedDevice);
+        }
+
+        private void btnWrite_Click(object sender, EventArgs e)
+        {
+            NfcOperate nfcOperate = new NfcOperate();
+            string nfcId = nfcOperate.ReadNfcId(bConnectedDevice);
+            MessageBox.Show("写入成功！");
+        }
     }
 }
