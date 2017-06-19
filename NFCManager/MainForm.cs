@@ -44,6 +44,26 @@ namespace NFCManager
         public void InitNfcEr302()
         {
 #warning  这里确定一个检测NFC读写器是否连接着
+            if (bConnectedDevice)
+            {
+                try
+                {
+                    int status = Er302Helper.rf_init_com(configData.CurrentPort, configData.CurrentBaud);
+                    if (status == 0)
+                    {
+                        bConnectedDevice = true;
+                    }
+                    else
+                    {
+                        bConnectedDevice = false;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    bConnectedDevice = false;
+                }
+                ChangeIconColor();
+            }
             if (!bConnectedDevice)
             {
                 int status = -1;
@@ -92,34 +112,40 @@ namespace NFCManager
                     }
                     bConnectedDevice = false;
                 }
-                if (bConnectedDevice)
-                {
-                    try
-                    {
-                        this.roundButton1.IconColor = Color.LawnGreen;
-                        roundButton1.Refresh();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                    //MessageBox.Show("Connect device success!");
-                }
-                else
-                {
-                    try
-                    {
-                        this.roundButton1.IconColor = Color.Red;
-                        roundButton1.Refresh();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                    //MessageBox.Show("Connect device success!");
-                }
+                ChangeIconColor();
             }
         }
+
+        private void ChangeIconColor()
+        {
+            if (bConnectedDevice)
+            {
+                try
+                {
+                    this.roundButton1.IconColor = Color.LawnGreen;
+                    roundButton1.Refresh();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                //MessageBox.Show("Connect device success!");
+            }
+            else
+            {
+                try
+                {
+                    this.roundButton1.IconColor = Color.Red;
+                    roundButton1.Refresh();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                //MessageBox.Show("Connect device success!");
+            }
+        }
+
         //回调函数;
         public void CallBack()
         {
