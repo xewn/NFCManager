@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -205,14 +206,17 @@ namespace NFCManager
         {
             textBoxData.Text = string.Empty;
             NfcOperate nfcOperate=new NfcOperate();
-            string nfcId = nfcOperate.ReadNfcId(bConnectedDevice);
+            //string nfcId = nfcOperate.ReadNfcId(bConnectedDevice);
+            textBoxData.Text = nfcOperate.nfcDataRead(bConnectedDevice);
         }
 
         private void btnWrite_Click(object sender, EventArgs e)
         {
             NfcOperate nfcOperate = new NfcOperate();
-            string nfcId = nfcOperate.ReadNfcId(bConnectedDevice);
-            MessageBox.Show("写入成功！");
+            //string nfcId = nfcOperate.ReadNfcId(bConnectedDevice);
+            nfcOperate.nfcDataWrite(bConnectedDevice,textBoxData.Text.Trim());
         }
+
+
     }
 }
